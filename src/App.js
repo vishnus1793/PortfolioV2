@@ -19,6 +19,9 @@ function App() {
   const [fileManagerPos, setFileManagerPos] = useState({ x: 220, y: 100 });
   const [draggingFileManager, setDraggingFileManager] = useState(false);
   const [dragOffsetFileManager, setDragOffsetFileManager] = useState({ x: 0, y: 0 });
+  const [projectsPos, setProjectsPos] = useState({ x: 180, y: 80 });
+  const [draggingProjects, setDraggingProjects] = useState(false);
+  const [dragOffsetProjects, setDragOffsetProjects] = useState({ x: 0, y: 0 });
 
   // Windows 11 wallpaper image (public domain or demo)
   const backgroundUrl = 'https://wallpapers.com/images/featured/1080p-3qmj7oaige168170.jpg';
@@ -31,11 +34,14 @@ function App() {
     if (searchRef.current && !searchRef.current.contains(event.target)) {
       setShowSearch(false);
     }
-    if (projectsRef.current && !projectsRef.current.contains(event.target)) {
-      setShowProjects(false);
-    }
-    if (terminalRef.current && !terminalRef.current.contains(event.target)) {
-      setShowTerminal(false);
+    // if (projectsRef.current && !projectsRef.current.contains(event.target)) {
+    //   setShowProjects(false);
+    // }
+    // if (terminalRef.current && !terminalRef.current.contains(event.target)) {
+    //   setShowTerminal(false);
+    // }
+    if (fileManagerRef.current && !fileManagerRef.current.contains(event.target)) {
+      setShowFileManager(false);
     }
   };
 
@@ -60,6 +66,14 @@ function App() {
     setDragOffsetFileManager({
       x: e.clientX - fileManagerPos.x,
       y: e.clientY - fileManagerPos.y,
+    });
+  };
+
+  const handleProjectsMouseDown = (e) => {
+    setDraggingProjects(true);
+    setDragOffsetProjects({
+      x: e.clientX - projectsPos.x,
+      y: e.clientY - projectsPos.y,
     });
   };
 
@@ -112,6 +126,26 @@ function App() {
     };
   }, [draggingFileManager, dragOffsetFileManager]);
 
+  useEffect(() => {
+    const handleMouseMove = (e) => {
+      if (draggingProjects) {
+        setProjectsPos({
+          x: e.clientX - dragOffsetProjects.x,
+          y: e.clientY - dragOffsetProjects.y,
+        });
+      }
+    };
+    const handleMouseUp = () => setDraggingProjects(false);
+    if (draggingProjects) {
+      document.addEventListener('mousemove', handleMouseMove);
+      document.addEventListener('mouseup', handleMouseUp);
+    }
+    return () => {
+      document.removeEventListener('mousemove', handleMouseMove);
+      document.removeEventListener('mouseup', handleMouseUp);
+    };
+  }, [draggingProjects, dragOffsetProjects]);
+
   return (
     <div
       className="desktop"
@@ -148,9 +182,13 @@ function App() {
         <div className="search-modal" ref={searchRef}>
           <input type="text" placeholder="Type to search..." className="search-input" />
           <ul className="explorer-results">
-            <li><span className="explorer-result-icon">📁</span> Documents</li>
+            <li onClick={() => { setShowFileManager(true); setShowSearch(false); }}>
+              <span className="explorer-result-icon">📁</span> Documents
+            </li>
             <li><span className="explorer-result-icon">🖼️</span> Pictures</li>
-            <li><span className="explorer-result-icon">🎵</span> Music</li>
+            <li onClick={() => window.open('https://www.linkedin.com/in/vishnu-s-0477ba246/', '_blank', 'noopener noreferrer')}>
+              <span className="explorer-result-icon">💼</span> LinkedIn
+            </li>
             <li><span className="explorer-result-icon">⬇️</span> Downloads</li>
             <li><span className="explorer-result-icon">🗂️</span> Open File Explorer</li>
             <li><span className="explorer-result-icon">⚙️</span> Settings</li>
@@ -161,8 +199,22 @@ function App() {
       )}
 
       {showProjects && (
-        <div className="window projects-modal" ref={projectsRef}>
-          <Projects />
+        <div
+          className="window projects-modal"
+          ref={projectsRef}
+          style={{
+            position: 'absolute',
+            left: projectsPos.x,
+            top: projectsPos.y,
+            cursor: draggingProjects ? 'grabbing' : 'default',
+            zIndex: 102,
+            background: 'transparent',
+            boxShadow: 'none',
+            border: 'none',
+            padding: 0,
+          }}
+        >
+          <Projects onHeaderMouseDown={handleProjectsMouseDown} onClose={() => setShowProjects(false)} />
         </div>
       )}
 
