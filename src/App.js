@@ -154,11 +154,12 @@ function App() {
 
       <div className="taskbar">
         <div className="taskbar-center">
-          <button className="taskbar-icon" onClick={toggleSearch}>🏠</button>
-          <button className="taskbar-icon" onClick={toggleProjects}>🗂️</button>
-          <button className="taskbar-icon" onClick={() => window.open('https://github.com/vishnus1793', '_blank', 'noopener noreferrer')}>🐙</button>
-          <button className="taskbar-icon" onClick={toggleTerminal}>💻</button>
-          <button className="taskbar-icon">⚙️</button>
+          <button className="taskbar-icon" onClick={toggleSearch} title="Start Menu">🏠</button>
+          <button className="taskbar-icon" onClick={toggleProjects} title="Projects">🗂️</button>
+          <button className="taskbar-icon" onClick={() => window.open('https://github.com/vishnus1793', '_blank', 'noopener noreferrer')} title="GitHub">🐙</button>
+          <button className="taskbar-icon" onClick={toggleTerminal} title="Terminal">💻</button>
+          <button className="taskbar-icon" onClick={() => window.open('https://your-resume-link.com', '_blank', 'noopener noreferrer')} title="Resume">📄</button>
+          <button className="taskbar-icon" title="Settings">⚙️</button>
         </div>
         <div className="taskbar-right">
           <span className="time">{new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>

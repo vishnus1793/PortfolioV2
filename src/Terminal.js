@@ -1,9 +1,18 @@
 import React, { useState, useRef, useEffect } from 'react';
 
 function Terminal({ onClose, onHeaderMouseDown }) {
-  const [lines, setLines] = useState(['Terminal!', 'Type `help` to see available commands.']);
+  const [lines, setLines] = useState([]);
   const [input, setInput] = useState('');
   const inputRef = useRef(null);
+  const ws = useRef(null);
+
+  useEffect(() => {
+    ws.current = new window.WebSocket('ws://localhost:3001');
+    ws.current.onmessage = (event) => {
+      setLines((prev) => [...prev, event.data]);
+    };
+    return () => ws.current.close();
+  }, []);
 
   useEffect(() => {
     inputRef.current && inputRef.current.focus();
@@ -15,7 +24,7 @@ function Terminal({ onClose, onHeaderMouseDown }) {
 
   const handleKeyDown = (e) => {
     if (e.key === 'Enter') {
-      setLines([...lines, `> ${input}`]);
+      ws.current.send(input + '\n');
       setInput('');
     }
   };
