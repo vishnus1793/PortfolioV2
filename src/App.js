@@ -158,7 +158,7 @@ function App() {
           <button className="taskbar-icon" onClick={toggleProjects} title="Projects">🗂️</button>
           <button className="taskbar-icon" onClick={() => window.open('https://github.com/vishnus1793', '_blank', 'noopener noreferrer')} title="GitHub">🐙</button>
           <button className="taskbar-icon" onClick={toggleTerminal} title="Terminal">💻</button>
-          <button className="taskbar-icon" onClick={() => window.open('https://your-resume-link.com', '_blank', 'noopener noreferrer')} title="Resume">📄</button>
+          <button className="taskbar-icon" onClick={() => window.open('https://drive.google.com/file/d/10FLTU5zTjppZ2RNqDdYsJZ6tiHU5euaB/view?usp=sharing', '_blank', 'noopener noreferrer')} title="Resume">📄</button>
           <button className="taskbar-icon" title="Settings">⚙️</button>
         </div>
         <div className="taskbar-right">
