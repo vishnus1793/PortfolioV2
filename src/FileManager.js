@@ -56,10 +56,16 @@ function FileManager({ onHeaderMouseDown, onClose }) {
       </div>
       <div style={{ flex: 1, padding: '18px 18px 8px 18px', overflowY: 'auto', background: '#fff' }}>
         <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
-          <li style={{ marginBottom: 12 }}><span role="img" aria-label="cert">📜</span> AWS Certified Solutions Architect</li>
-          <li style={{ marginBottom: 12 }}><span role="img" aria-label="cert">📜</span> Google Cloud Professional Data Engineer</li>
-          <li style={{ marginBottom: 12 }}><span role="img" aria-label="cert">📜</span> Microsoft Certified: Azure Developer Associate</li>
-          <li style={{ marginBottom: 12 }}><span role="img" aria-label="cert">📜</span> Certified Kubernetes Administrator</li>
+          <li style={{ marginBottom: 12 }}>
+            <span role="img" aria-label="cert">📜</span> GitHub Foundation
+          </li>
+          <li style={{ marginBottom: 12 }}>
+            <span role="img" aria-label="cert">📜</span> MongoDB Associate Developer
+          </li>
+          <li style={{ marginBottom: 12 }}>
+            <span role="img" aria-label="cert">📜</span> Docker Mastery: Kubernetes and Swarm
+          </li>
+
         </ul>
       </div>
     </div>
